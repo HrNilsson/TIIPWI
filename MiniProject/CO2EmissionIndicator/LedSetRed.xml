@@ -1,0 +1,123 @@
+<XMLSequenceOfSteps name="Set Leds">
+  <description></description>
+  <author>jmn</author>
+  <timestamp>2014-10-31 15:05:24 [CET]</timestamp>
+  <toolBuildVersion>17710</toolBuildVersion>
+  <allowRunWithoutTransmitter>true</allowRunWithoutTransmitter>
+  <logSettings>
+    <clearTelegramsOnStartup>false</clearTelegramsOnStartup>
+    <telegramLogPolicy>Never</telegramLogPolicy>
+    <telegramLogFile>sequenceLog</telegramLogFile>
+    <executionLogPolicy>Never</executionLogPolicy>
+    <executionLogFile>executionLog</executionLogFile>
+  </logSettings>
+  <substituteText id="GW_EUI" text="0015BC002100018A"/>
+  <substituteText id="UI_EUI" text="0015BC0028000269"/>
+  <substituteText id="UI_RED_LED_INTERVAL_S"     text="0x01"/>
+  <substituteText id="UI_RED_LED_NUM_BLINKS"     text="0x01"/>
+  <substituteText id="UI_RED_LED_PERCENT_ON"     text="0x14"/>
+  <substituteText id="UI_RED_LED_PERIOD_ON_MS"   text="0x0064"/>
+  <substituteText id="UI_GREEN_LED_INTERVAL_S"   text="0x00"/>
+  <substituteText id="UI_GREEN_LED_NUM_BLINKS"   text="0x01"/>
+  <substituteText id="UI_GREEN_LED_PERCENT_ON"   text="0x14"/>
+  <substituteText id="UI_GREEN_LED_PERIOD_ON_MS" text="0x0064"/>
+  <step name="Subscribe to Gateway">
+    <description></description>
+    <instruction></instruction>
+    <timeoutInterval>10</timeoutInterval>
+    <stepDelayMillis>100</stepDelayMillis>
+    <transmitBeforeReceive>true</transmitBeforeReceive>
+    <maxRetransmissions>0</maxRetransmissions>
+    <telegramToTransmit></telegramToTransmit>
+    <receiveFilters></receiveFilters>
+    <approvalDataGroup eval="AND"/>
+    <componentData>
+      <name>Gateway Subscribe</name>
+      <inputArgs> -gw ##GW_EUI##</inputArgs>
+    </componentData>
+  </step>
+  <step name="Set blink pattern">
+    <description></description>
+    <instruction></instruction>
+    <timeoutInterval>10</timeoutInterval>
+    <stepDelayMillis>100</stepDelayMillis>
+    <transmitBeforeReceive>true</transmitBeforeReceive>
+    <maxRetransmissions>2</maxRetransmissions>
+    <transmitProtocolPartClass>com.develco.protocol.amm.SmartAMMTelegramProtocol</transmitProtocolPartClass>
+    <telegramToTransmit>
+--SmartAMM Telegram--
+Telegram No:  0x06  [6]
+Options:  0x03  
+.- _____011 Version no.: [3]
+.- __000___ Telegram type: [Message]
+.- _0______ Ack request: [false]
+.- 0_______ Aux header included: [false]
+Dest. SAP:  0x00  [ZigBeeModem]
+Source SAP:  0xC0  [IpSysAdmin]
+Payload Length:  0x2B  [43]
+Header FCS:  0xE8
+   --Generic Data Out--
+   ZigBee Modem Msg Type:  0x20  [GenericDataOutDirect]
+   Dest. Address Mode:  0x03  [EUI]
+   Destination Address:  0x##UI_EUI##
+   Profile Id:  0x0104  [HomeAutomation]
+   Destination Endpoint:  0x84  [DP_YogaCustom]
+   Cluster Id:  0xFC02  [GenericUI]
+   Source Endpoint:  0xFF  [DP_Generic_EP]
+   Tx Options:  0x00  
+   .- _______0 Aps Security Enabled: [false]
+   .- ______0_ Use NWK Key for APS security: [false]
+   .- _____0__ APS Ack: [false]
+   .- ____0___ Fragmentation Requested: [false]
+   .- ___0____ Suppress Generic Data Out Confirm: [false]
+   .- __0_____ Disable security: [false]
+   .- _0______ Suppress Route Discovery: [false]
+   .- 0_______ Force Route Discovery: [false]
+   ASDU Length:  0x19  [25]
+      --ZCL Frame--
+      Frame Control:  0x05  
+      .- ______01 Frame Type: [ClusterSpecific]
+      .- _____1__ Manufacturer Specific: [true]
+      .- ____0___ Direction: [Client-&gt;Server]
+      .- ___0____ Disable Default Rsp.: [false]
+      .- 000_____ Reserved
+      Manufacturer Code:  0x1015  [Develco]
+      Transaction Seq. No.:  0x01  [1]
+      Command Id:  0x01  [LEDs]
+         --ZCL Data--
+            --LED Control - LED 1 idle--
+            Interval:  ##UI_RED_LED_INTERVAL_S##
+            Num Blinks:  ##UI_RED_LED_NUM_BLINKS##
+            Percentage On:  ##UI_RED_LED_PERCENT_ON##
+            Period On:  ##UI_RED_LED_PERIOD_ON_MS##
+            --LED Control - LED 2 idle--
+            Interval:  ##UI_GREEN_LED_INTERVAL_S##
+            Num Blinks:  ##UI_GREEN_LED_NUM_BLINKS##
+            Percentage On:  ##UI_GREEN_LED_PERCENT_ON##
+            Period On:  ##UI_GREEN_LED_PERIOD_ON_MS##
+            --LED Control - LED 1 active--
+            Interval:  ##UI_RED_LED_INTERVAL_S##
+            Num Blinks:  ##UI_RED_LED_NUM_BLINKS##
+            Percentage On:  ##UI_RED_LED_PERCENT_ON##
+            Period On:  ##UI_RED_LED_PERIOD_ON_MS##
+            --LED Control - LED 2 active--
+            Interval:  ##UI_GREEN_LED_INTERVAL_S##
+            Num Blinks:  ##UI_GREEN_LED_NUM_BLINKS##
+            Percentage On:  ##UI_GREEN_LED_PERCENT_ON##
+            Period On:  ##UI_GREEN_LED_PERIOD_ON_MS##
+</telegramToTransmit>
+    <receiveFilters>
+Source Address:  0x##UI_EUI##
+Cluster Id:  0xFC02  [GenericUI]
+Command Id:  0x0B  [DefaultResponse]
+</receiveFilters>
+    <approvalDataGroup eval="AND">
+      <approvalData>
+        <comment></comment>
+        <fieldFilter></fieldFilter>
+        <fieldToValidate>Status</fieldToValidate>
+        <automaticValidationValue>Success</automaticValidationValue>
+      </approvalData>
+    </approvalDataGroup>
+  </step>
+</XMLSequenceOfSteps>

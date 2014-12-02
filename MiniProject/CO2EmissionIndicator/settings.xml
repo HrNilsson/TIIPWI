@@ -1,0 +1,63 @@
+<usersettings>
+  <setting>
+    <saveTimestamp>2014-11-13 12:09:10.336 UTC</saveTimestamp>
+    <itemObj class="com.develco.amm.client.version.UpgradeAndVersionTool">
+      <enableUpgradeCheck>true</enableUpgradeCheck>
+      <toolRepository>//develco-file.develco.local/dp-udvikling/_SmartAMM system/Tools/Sequence Executer Tool</toolRepository>
+    </itemObj>
+  </setting>
+  <setting>
+    <saveTimestamp>2014-11-13 12:09:10.377 UTC</saveTimestamp>
+    <itemObj class="com.develco.amm.client.settings.ToolUserUtilSettings">
+      <manuallySetUsername>false</manuallySetUsername>
+    </itemObj>
+  </setting>
+  <setting>
+    <saveTimestamp>2014-11-13 12:09:10.846 UTC</saveTimestamp>
+    <itemObj class="com.develco.amm.client.serverAPI.ServerConnectionSettings">
+      <useToolRxTelegramTimestamp>true</useToolRxTelegramTimestamp>
+      <useToolTxTelegramTimestamp>true</useToolTxTelegramTimestamp>
+    </itemObj>
+  </setting>
+  <setting>
+    <saveTimestamp>2014-12-01 12:12:09.760 UTC</saveTimestamp>
+    <itemObj class="com.develco.amm.sequenceexecutertool.GatewayConnectionSettings">
+      <gatewayType>ActiveMq</gatewayType>
+      <baudRate>0</baudRate>
+      <portNo>62000</portNo>
+      <hostName>localhost</hostName>
+      <limitToOneInstance>false</limitToOneInstance>
+    </itemObj>
+  </setting>
+  <setting>
+    <saveTimestamp>2014-12-01 12:12:09.776 UTC</saveTimestamp>
+    <itemObj class="com.develco.amm.sequenceexecutertool.SequenceExecuterSkin">
+      <toolName></toolName>
+    </itemObj>
+  </setting>
+  <setting>
+    <saveTimestamp>2014-12-01 13:00:22.783 UTC</saveTimestamp>
+    <itemObj class="com.develco.amm.client.settings.TelegramListSettings">
+      <myFilePath></myFilePath>
+      <useColorCode>true</useColorCode>
+      <useAutoScroll>true</useAutoScroll>
+      <viewMode>TextView</viewMode>
+    </itemObj>
+  </setting>
+  <setting>
+    <saveTimestamp>2014-12-01 19:53:35.505 UTC</saveTimestamp>
+    <itemObj class="com.develco.amm.client.settings.SequenceSettings">
+      <myXMLFilePath>C:\Users\ReneNilsson\Documents\GitHub\TIIPWI\MiniProject\CO2EmissionIndicator\LedSet.xml</myXMLFilePath>
+    </itemObj>
+  </setting>
+  <setting>
+    <saveTimestamp>2014-12-01 19:53:35.686 UTC</saveTimestamp>
+    <itemObj class="com.develco.amm.client.protocol.ProtocolSessionReposGarbageCollector">
+      <garbageCollectInterval>30</garbageCollectInterval>
+      <maxNoOfSessions>2000</maxNoOfSessions>
+      <maxTimeSinceLastLookup>-1</maxTimeSinceLastLookup>
+      <removeClosedSessions>false</removeClosedSessions>
+    </itemObj>
+  </setting>
+  <saveTimestamp>2014-12-01 19:53:35.700 UTC</saveTimestamp>
+</usersettings>

@@ -1,0 +1,1 @@
+java -Dlogback.configurationFile=file:logback.xml -jar Sequence_Executer_Tool.jar -enableGUI false -toolSettingsPath "%cd%\settings.xml" -XMLscript "%cd%\LedSet.xml"
