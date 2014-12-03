@@ -1,9 +1,9 @@
 <configuration scan="true">
 
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-	    <file>logs/application.log</file>
+	    <file>${user.home}/.smartammutil/logs/sequenceExecuterApplicationInternal.log</file>
  	    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
- 	      <fileNamePattern>logs/application.%i.log</fileNamePattern>
+ 	      <fileNamePattern>${user.home}/.smartammutil/logs/sequenceExecuterApplicationInternal.%i.log</fileNamePattern>
 	      <minIndex>1</minIndex>
 	      <maxIndex>10</maxIndex>
 	    </rollingPolicy>
@@ -25,10 +25,9 @@
 
 	<logger name="org.apache.activemq" level="INFO"/>
 	<logger name="org.apache.mina" level="WARN"/>
-	<logger name="com.develco.amm.singlegateway" level="DEBUG"/>
-	<logger name="com.develco.protocol" level="DEBUG"/>
+	<logger name="com.develco.protocol" level="INFO"/>	
 
-	<root level="TRACE">
+	<root level="DEBUG">
 		<appender-ref ref="FILE" />
 	</root>
   

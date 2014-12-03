@@ -4,19 +4,18 @@
  */
 package co2emissionindicator;
 
+import com.develco.amm.sequenceexecutertool.SequenceExecuterTool;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -26,32 +25,55 @@ import org.apache.commons.net.ftp.FTPClient;
  */
 public class CO2EmissionIndicator {
 
-    private static Process processRun = null;
-    private static int runningCO2Average = 0;
-    private static int[] dailyCO2Values = new int[24];
+    private static int co2EmissionLimit = 340;
+    private static int co2EmissionLimitHysteresis = 5;
+    private static InputStream input;
     
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) {        
+        PipedOutputStream pos = new PipedOutputStream();
+        System.setOut( new PrintStream(pos, true) );
+        System.setErr( new PrintStream(pos, true) );
+        
+        try {
+            input = new PipedInputStream(pos);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+        
         CO2EmissionIndicator tool = new CO2EmissionIndicator();
         boolean running = true;
-        
+        int retryAttempts = 0;
+        int currentCO2EmissionValue = -1;
         while(running){
-            dailyCO2Values = tool.downloadCO2Data();
-            runningCO2Average = tool.updateRunningAverage(dailyCO2Values);
-            if(tool.getCurrentCO2Value() > runningCO2Average + 10) {
-                System.out.println("CO2 levels are high!");
-                tool.runSequenceExecuterTool("Red");
-            } else if (tool.getCurrentCO2Value() < runningCO2Average - 10) {
-                System.out.println("CO2 levels are low!.");
-                tool.runSequenceExecuterTool("Green");
+            currentCO2EmissionValue = tool.downloadCO2Data();
+            if(currentCO2EmissionValue == -1) {
+                printLine("CO2 Emission level could not be retreived.");
             } else {
-                System.out.println("CO2 levels somewhere in the middle. No need to change. Hysteresis.");
+                if(currentCO2EmissionValue > co2EmissionLimit + co2EmissionLimitHysteresis) {
+                    printLine("CO2 levels are high!");
+                    while(!tool.runSequenceExecuterTool("Red") && retryAttempts < 5 ) {    
+                        retryAttempts++;
+                        printLine("Retrying to run Sequence Executer Tool: " + retryAttempts);
+                    }
+                    retryAttempts = 0;
+                } else if (currentCO2EmissionValue < co2EmissionLimit - co2EmissionLimitHysteresis) {
+                    printLine("CO2 levels are low!.");
+                    while(!tool.runSequenceExecuterTool("Green") && retryAttempts < 5 ) {    
+                        retryAttempts++;
+                        printLine("Retrying to run Sequence Executer Tool: " + retryAttempts);
+                    }
+                    retryAttempts = 0;
+                } else {
+                    printLine("CO2 levels within hysteresis limits.");
+                }
             }
-
+            
             try {
-                Thread.sleep(1000*60);//*15); // Sleep 15 minutes
+                Thread.sleep(1000*45); // Sleep 4 minutes
             } catch (InterruptedException ex) {
                 System.out.println(ex);
                 running = false;
@@ -59,7 +81,7 @@ public class CO2EmissionIndicator {
         }
     }
     
-    private int[] downloadCO2Data() {
+    private int downloadCO2Data() {
         String server = "ftp.energinet.dk";
         int port = 21;
         String user = "endkftp";
@@ -74,20 +96,21 @@ public class CO2EmissionIndicator {
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
             
             String date = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-            String remoteFile = "/CO2Prognoser/"+date+"_CO2prognose.txt";
+            String remoteFile = "/Onlinedata/"+date+"_onlinedata.txt";
             InputStream inputStream = ftpClient.retrieveFileStream(remoteFile);
-            int[] co2 = parseFtpFile(inputStream);
+            
+            int co2Emission = parseFtpFile(inputStream);
             boolean success = ftpClient.completePendingCommand();
             if (success) {
-                System.out.println("Sucessfully retrieved and parsed CO2 data.");
+                printLine("Sucessfully retrieved and parsed CO2 data.");
             }
             inputStream.close();
             
-            return co2;
+            return co2Emission;
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
             ex.printStackTrace();
-            return null;
+            return -1;
         } finally {
             try {
                 if (ftpClient.isConnected()) {
@@ -100,88 +123,98 @@ public class CO2EmissionIndicator {
         }
     }
     
-    private int[] parseFtpFile(InputStream inputStream) throws IOException {
+    private int parseFtpFile(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        bufferedReader.readLine();
-        bufferedReader.readLine();
-        int co2[] = new int[24];
         String line = "";
-        int i = 0;
-        while ((line = bufferedReader.readLine()) != null) {
-            if(i>24) {
-                System.out.println("Parsing failed. More than 24 entries.");
-                return null;
-            }
-            String[] entry = line.split(";");
-            co2[i] = Integer.parseInt(entry[1]);
-            i++;
-            
-        }
-        return co2;
-    }
-    
-    private int updateRunningAverage(int[] co2) {
-        // This should probably be more fancy...
-        int dailyAverage = 0;
-        for(int value: co2) {
-            dailyAverage += value;
-        }
-        return dailyAverage /= 24;
-    }
-    
-    private int getCurrentCO2Value() {
-        String hh = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
-        int hour = Integer.parseInt(hh);
+        String dummy = "";
+        int co2Emission = -1;
         
-        return dailyCO2Values[hour];
+        while ((dummy = bufferedReader.readLine()) != null) {
+            line = dummy; // this will eventually get the last line.
+        }
+        String[] entry = line.split(";");
+        co2Emission = Integer.parseInt(entry[16].replaceAll("\\s", ""));
+        return co2Emission;
     }
     
-    private void runSequenceExecuterTool(String color){
+    private boolean runSequenceExecuterTool(String color){
         try {
-            if(processRun != null)
-                processRun.destroy();
+            printLine("Running sequence: " + color);
             
-            System.out.println("Running sequence: " + color);
-           // processRun = Runtime.getRuntime().exec("java -Dlogback.configurationFile=file:logback.xml -jar Sequence_Executer_Tool.jar -enableGUI false -toolSettingsPath settings.xml -XMLscript LedSet"+color+".xml");
-            String jcommand = "java -Dlogback.configurationFile=file:logback.xml -jar Sequence_Executer_Tool.jar -enableGUI false -toolSettingsPath settings.xml -XMLscript LedSet"+color+".xml";
-            processRun = Runtime.getRuntime().exec("cmd.exe /c cd \""+new File("newDir")+"\" & start cmd.exe /k "+jcommand);
-  
-           /* 
-            printLines(" stdout:", processRun.getInputStream());
-            printLines(" stderr:", processRun.getErrorStream());
-            */
-            /*
-            File file = new File("Sequence_Executer_Tool.jar"); 
-            URL[] urls = { file.toURI().toURL() };  
-            URLClassLoader loader = new URLClassLoader(urls);  
+            class OneShotTask implements Runnable {
+                String color;
+                OneShotTask(String s) { 
+                    color = s; 
+                }
+                @Override
+                public void run() {
+                    SequenceExecuterTool seTool = new SequenceExecuterTool();
+                    String[] args = new String[6];
+                    args[0] = "-enableGUI";
+                    args[1] = "false";
+                    args[2] = "-toolSettingsPath"; 
+                    args[3] = "settings.xml";
+                    args[4] = "-XMLscript";
+                    args[5] = "LedSet"+color+".xml"; 
+                    seTool.main(args);
+                }
+            };
+            Thread seThread=  new Thread(new OneShotTask(color));
+            seThread.start();
             
-            JarFile jarFile = new JarFile(file);  
-            Manifest manifest = jarFile.getManifest(); // warning: can be null  
-            Attributes attributes = manifest.getMainAttributes();  
-            String className = attributes.getValue(Attributes.Name.MAIN_CLASS);
+            boolean success = false;
             
-            Class<?> cls = loader.loadClass(className); // replace the complete class name with the actual main class  
-            Method main;
-            main = cls.getDeclaredMethod("main", String[].class);
+            String line = null;
+            BufferedReader in = new BufferedReader(new InputStreamReader(input));
+            while ((line = in.readLine()) != null) {
+                /* Print lines in cmd line /*
+                System.console().writer().print(line +"\n\r");
+                System.console().writer().flush();  */
+                if(line.contains("[Set blink pattern]") && line.contains("[Status: 0x00 [Success]]")) {
+                    success = true;
+                    seThread.destroy();
+                    seThread = null;
+                    printLine("Successfully ran Sequence Executer Tool.");
+                    break;
+                } else if(line.contains("Sequence Step [Set blink pattern] new status: [Done]")) {
+                    success = true;
+                    seThread.destroy();
+                    seThread = null;
+                    printLine("Successfully ran Sequence Executer Tool.");
+                    break;
+                } else if(line.contains("Sequence timed out when processing step [Set blink pattern]")) {
+                    success = false;
+                    seThread.destroy();
+                    seThread = null;
+                    printLine("Failed to run Sequence Executer Tool.");
+                    break;
+                } else if(line.contains("Sequence Step [Set blink pattern] new status: [TimedOut]")) {
+                    success = false;
+                    seThread.destroy();
+                    seThread = null;
+                    printLine("Failed to run Sequence Executer Tool.");
+                    break;
+                }
+                //Should there be some timer on this to ensure that it is killed??
+            }
             
-            Object[] args = new String[1];//new String[1];
-            args[0] = "false";
-            //args[0] = "-enableGUI false -toolSettingsPath settings.xml -XMLscript LedSet"+color+".xml"; 
-                   //"enableGUI false", "toolSettingsPath settings.xml", "XMLscript LedSet"+color+".xml"};
-             
-            main.invoke(null, args);*/
+            
+            printLine("Status: "+success+"\n\r");
+            
+            
+            return success;
             
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-    }
-    private void printLines(String name, InputStream ins) throws Exception {
-        String line = null;
-        BufferedReader in = new BufferedReader(new InputStreamReader(ins));
-        while ((line = in.readLine()) != null) {
-            System.out.println(name + " " + line);
+            return false;
         }
     }
     
+    private static void printLine(String str) {
+        if(System.console() != null) {
+            System.console().writer().printf(str + "\n\r");
+            System.console().writer().flush();
+        }
+    }
 }
