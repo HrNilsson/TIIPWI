@@ -14,8 +14,6 @@ import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -27,20 +25,24 @@ public class CO2EmissionIndicator {
 
     private static int co2EmissionLimit = 340;
     private static int co2EmissionLimitHysteresis = 5;
-    private static InputStream input;
+    private static BufferedReader in;
     
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {        
+    public static void main(String[] args) {
+        
         PipedOutputStream pos = new PipedOutputStream();
+        InputStream input = null;
         System.setOut( new PrintStream(pos, true) );
         System.setErr( new PrintStream(pos, true) );
-        
         try {
             input = new PipedInputStream(pos);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            printLine(ex.getMessage());
+        }
+        if(input != null) {
+            in = new BufferedReader(new InputStreamReader(input));
         }
         
         
@@ -55,17 +57,19 @@ public class CO2EmissionIndicator {
             } else {
                 if(currentCO2EmissionValue > co2EmissionLimit + co2EmissionLimitHysteresis) {
                     printLine("CO2 levels are high!");
-                    while(!tool.runSequenceExecuterTool("Red") && retryAttempts < 5 ) {    
+                    tool.runSequenceExecuterTool("Red");
+                    /*while(!tool.runSequenceExecuterTool("Red") && retryAttempts < 5 ) {    
                         retryAttempts++;
                         printLine("Retrying to run Sequence Executer Tool: " + retryAttempts);
-                    }
+                    }*/
                     retryAttempts = 0;
                 } else if (currentCO2EmissionValue < co2EmissionLimit - co2EmissionLimitHysteresis) {
                     printLine("CO2 levels are low!.");
-                    while(!tool.runSequenceExecuterTool("Green") && retryAttempts < 5 ) {    
+                    tool.runSequenceExecuterTool("Green");
+                    /*while(!tool.runSequenceExecuterTool("Green") && retryAttempts < 5 ) {    
                         retryAttempts++;
                         printLine("Retrying to run Sequence Executer Tool: " + retryAttempts);
-                    }
+                    }*/
                     retryAttempts = 0;
                 } else {
                     printLine("CO2 levels within hysteresis limits.");
@@ -73,9 +77,11 @@ public class CO2EmissionIndicator {
             }
             
             try {
-                Thread.sleep(1000*45); // Sleep 4 minutes
+                printLine("Sleep");
+                Thread.sleep(1000*60); // Sleep 4 minutes
+                printLine("Wakeup");
             } catch (InterruptedException ex) {
-                System.out.println(ex);
+                printLine(ex.getMessage());
                 running = false;
             }
         }
@@ -109,7 +115,7 @@ public class CO2EmissionIndicator {
             return co2Emission;
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
-            ex.printStackTrace();
+            printLine(ex.getMessage());
             return -1;
         } finally {
             try {
@@ -118,7 +124,7 @@ public class CO2EmissionIndicator {
                     ftpClient.disconnect();
                 }
             } catch (IOException ex) {
-                ex.printStackTrace();
+                printLine(ex.getMessage());
             }
         }
     }
@@ -155,49 +161,27 @@ public class CO2EmissionIndicator {
                     args[2] = "-toolSettingsPath"; 
                     args[3] = "settings.xml";
                     args[4] = "-XMLscript";
-                    args[5] = "LedSet"+color+".xml"; 
+                    args[5] = "C:/Users/ReneNilsson/Documents/GitHub/TIIPWI/MiniProject/CO2EmissionIndicator/LedSet"+color+".xml";
                     seTool.main(args);
                 }
             };
-            Thread seThread=  new Thread(new OneShotTask(color));
+            Thread seThread  = new Thread(new OneShotTask(color));
             seThread.start();
             
             boolean success = false;
             
+            
             String line = null;
-            BufferedReader in = new BufferedReader(new InputStreamReader(input));
             while ((line = in.readLine()) != null) {
-                /* Print lines in cmd line /*
-                System.console().writer().print(line +"\n\r");
-                System.console().writer().flush();  */
-                if(line.contains("[Set blink pattern]") && line.contains("[Status: 0x00 [Success]]")) {
-                    success = true;
-                    seThread.destroy();
-                    seThread = null;
-                    printLine("Successfully ran Sequence Executer Tool.");
-                    break;
-                } else if(line.contains("Sequence Step [Set blink pattern] new status: [Done]")) {
-                    success = true;
-                    seThread.destroy();
-                    seThread = null;
-                    printLine("Successfully ran Sequence Executer Tool.");
-                    break;
-                } else if(line.contains("Sequence timed out when processing step [Set blink pattern]")) {
-                    success = false;
-                    seThread.destroy();
-                    seThread = null;
-                    printLine("Failed to run Sequence Executer Tool.");
-                    break;
-                } else if(line.contains("Sequence Step [Set blink pattern] new status: [TimedOut]")) {
-                    success = false;
-                    seThread.destroy();
-                    seThread = null;
-                    printLine("Failed to run Sequence Executer Tool.");
+                // Print lines in cmd line 
+                //printLine(line);
+                if(line.contains("Sequence Executor Exit Status:")) {
+                    if(line.contains("Success")) {
+                        success = true;
+                    }
                     break;
                 }
-                //Should there be some timer on this to ensure that it is killed??
             }
-            
             
             printLine("Status: "+success+"\n\r");
             
@@ -205,8 +189,7 @@ public class CO2EmissionIndicator {
             return success;
             
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            printLine(e.getMessage());
             return false;
         }
     }

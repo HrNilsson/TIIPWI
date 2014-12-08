@@ -23,11 +23,11 @@
 	  </encoder>
 	</appender>
 
-	<logger name="org.apache.activemq" level="INFO"/>
+	<logger name="org.apache.activemq" level="WARN"/>
 	<logger name="org.apache.mina" level="WARN"/>
-	<logger name="com.develco.protocol" level="INFO"/>	
+	<logger name="com.develco.protocol" level="WARN"/>	
 
-	<root level="DEBUG">
+	<root level="WARN">
 		<appender-ref ref="FILE" />
 	</root>
   
