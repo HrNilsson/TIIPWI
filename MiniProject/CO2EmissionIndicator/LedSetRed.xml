@@ -1,8 +1,8 @@
 <XMLSequenceOfSteps name="Set Leds">
   <description></description>
-  <author>jmn</author>
-  <timestamp>2014-10-31 15:05:24 [CET]</timestamp>
-  <toolBuildVersion>17710</toolBuildVersion>
+  <author>ReneNilsson</author>
+  <timestamp>2014-12-08 20:56:20 [CET]</timestamp>
+  <toolBuildVersion>15973</toolBuildVersion>
   <allowRunWithoutTransmitter>true</allowRunWithoutTransmitter>
   <logSettings>
     <clearTelegramsOnStartup>false</clearTelegramsOnStartup>
@@ -13,14 +13,14 @@
   </logSettings>
   <substituteText id="GW_EUI" text="0015BC002100018A"/>
   <substituteText id="UI_EUI" text="0015BC0028000269"/>
-  <substituteText id="UI_RED_LED_INTERVAL_S"     text="0x01"/>
-  <substituteText id="UI_RED_LED_NUM_BLINKS"     text="0x01"/>
-  <substituteText id="UI_RED_LED_PERCENT_ON"     text="0x14"/>
-  <substituteText id="UI_RED_LED_PERIOD_ON_MS"   text="0x0064"/>
-  <substituteText id="UI_GREEN_LED_INTERVAL_S"   text="0x00"/>
-  <substituteText id="UI_GREEN_LED_NUM_BLINKS"   text="0x01"/>
-  <substituteText id="UI_GREEN_LED_PERCENT_ON"   text="0x14"/>
-  <substituteText id="UI_GREEN_LED_PERIOD_ON_MS" text="0x0064"/>
+  <substituteText id="UI_RED_LED_INTERVAL_S"      text="0x01"/>
+  <substituteText id="UI_RED_LED_NUM_BLINKS"      text="0x01"/>
+  <substituteText id="UI_RED_LED_PERCENT_ON"      text="0x14"/>
+  <substituteText id="UI_RED_LED_PERIOD_ON_MS"    text="0x0064"/>
+  <substituteText id="UI_GREEN_LED_INTERVAL_S"    text="0x00"/>
+  <substituteText id="UI_GREEN_LED_NUM_BLINKS"    text="0x01"/>
+  <substituteText id="UI_GREEN_LED_PERCENT_ON"    text="0x14"/>
+  <substituteText id="UI_GREEN_LED_PERIOD_ON_MS"  text="0x0064"/>
   <step name="Subscribe to Gateway">
     <description></description>
     <instruction></instruction>
@@ -46,7 +46,7 @@
     <transmitProtocolPartClass>com.develco.protocol.amm.SmartAMMTelegramProtocol</transmitProtocolPartClass>
     <telegramToTransmit>
 --SmartAMM Telegram--
-Telegram No:  0x06  [6]
+Telegram No:  0x47  [71]
 Options:  0x03  
 .- _____011 Version no.: [3]
 .- __000___ Telegram type: [Message]
@@ -109,7 +109,6 @@ Header FCS:  0xE8
     <receiveFilters>
 Source Address:  0x##UI_EUI##
 Cluster Id:  0xFC02  [GenericUI]
-Command Id:  0x0B  [DefaultResponse]
 </receiveFilters>
     <approvalDataGroup eval="AND">
       <approvalData>

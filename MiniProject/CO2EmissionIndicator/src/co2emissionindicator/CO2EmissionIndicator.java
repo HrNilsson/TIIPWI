@@ -27,9 +27,11 @@ public class CO2EmissionIndicator {
     private static int co2EmissionLimitHysteresis = 5;
     private static BufferedReader in;
     
-    /**
-     * @param args the command line arguments
+    /*
+     * NOTE: For some reason the sequence executor tool run will never return success,
+     * even though the run is successfull. Therefore retransmissions are not enabled.
      */
+
     public static void main(String[] args) {
         
         PipedOutputStream pos = new PipedOutputStream();
@@ -78,7 +80,7 @@ public class CO2EmissionIndicator {
             
             try {
                 printLine("Sleep");
-                Thread.sleep(1000*60); // Sleep 4 minutes
+                Thread.sleep(1000*60*4); // Sleep 4 minutes
                 printLine("Wakeup");
             } catch (InterruptedException ex) {
                 printLine(ex.getMessage());
