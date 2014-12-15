@@ -1,1 +1,0 @@
-java -jar "C:\Users\ReneNilsson\Documents\GitHub\TIIPWI\MiniProject\CO2EmissionIndicator\dist\CO2EmissionIndicator.jar"

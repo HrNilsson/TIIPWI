@@ -1,0 +1,65 @@
+<XMLSequenceOfSteps name="Set Leds">
+  <description></description>
+  <author>ReneNilsson</author>
+  <timestamp>2014-12-10 17:20:49 [CET]</timestamp>
+  <toolBuildVersion>15973</toolBuildVersion>
+  <allowRunWithoutTransmitter>true</allowRunWithoutTransmitter>
+  <logSettings>
+    <clearTelegramsOnStartup>false</clearTelegramsOnStartup>
+    <telegramLogPolicy>Never</telegramLogPolicy>
+    <telegramLogFile>sequenceLog</telegramLogFile>
+    <executionLogPolicy>Never</executionLogPolicy>
+    <executionLogFile>executionLog</executionLogFile>
+  </logSettings>
+  <substituteText id="GW_EUI" text="0015BC002100018A"/>
+  <substituteText id="UI_EUI" text="0015BC0028000269"/>
+  <step name="Subscribe to Gateway">
+    <description></description>
+    <instruction></instruction>
+    <timeoutInterval>10</timeoutInterval>
+    <stepDelayMillis>100</stepDelayMillis>
+    <transmitBeforeReceive>true</transmitBeforeReceive>
+    <maxRetransmissions>0</maxRetransmissions>
+    <telegramToTransmit></telegramToTransmit>
+    <receiveFilters></receiveFilters>
+    <approvalDataGroup eval="AND"/>
+    <componentData>
+      <name>Gateway Subscribe</name>
+      <inputArgs> -gw ##GW_EUI##</inputArgs>
+    </componentData>
+  </step>
+  <step name="Authorize Device">
+    <description></description>
+    <instruction></instruction>
+    <timeoutInterval>10</timeoutInterval>
+    <stepDelayMillis>100</stepDelayMillis>
+    <transmitBeforeReceive>true</transmitBeforeReceive>
+    <maxRetransmissions>2</maxRetransmissions>
+    <transmitProtocolPartClass>com.develco.protocol.amm.SmartAMMTelegramProtocol</transmitProtocolPartClass>
+    <telegramToTransmit>
+--SmartAMM Telegram--
+Telegram No:  0x03  [3]
+Options:  0x03  
+.- _____011 Version no.: [3]
+.- __000___ Telegram type: [Message]
+.- _0______ Ack request: [false]
+.- 0_______ Aux header included: [false]
+Dest. SAP:  0x00  [ZigBeeModem]
+Source SAP:  0xC0  [IpSysAdmin]
+Payload Length:  0x0E  [14]
+Header FCS:  0xCD
+   --Trust Center Authorize Device Request--
+   ZigBee Modem Msg Type:  0x02  [TrustCenterAuthDeviceRequest]
+   Dest. Network Address:  0xFFFC
+   Join Permit Duration:  0xFA  [Timed: 250]
+   Device Address:  0x##UI_EUI##
+   Installation Code Length:  0x01  [1]
+   Installation Code:  00
+</telegramToTransmit>
+    <receiveFilters>
+Source Address:  0x##UI_EUI##
+Cluster Id:  0x0013  [Device_annce]
+</receiveFilters>
+    <approvalDataGroup eval="AND"/>
+  </step>
+</XMLSequenceOfSteps>

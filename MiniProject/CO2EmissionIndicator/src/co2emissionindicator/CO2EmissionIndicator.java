@@ -49,8 +49,11 @@ public class CO2EmissionIndicator {
         
         
         CO2EmissionIndicator tool = new CO2EmissionIndicator();
+        printLine("Authorizing device");
+        tool.runSequenceExecuterTool("AuthorizeDevice.xml");
+        
         boolean running = true;
-        int retryAttempts = 0;
+        //int retryAttempts = 0;
         int currentCO2EmissionValue = -1;
         while(running){
             currentCO2EmissionValue = tool.downloadCO2Data();
@@ -58,23 +61,23 @@ public class CO2EmissionIndicator {
                 printLine("CO2 Emission level could not be retreived.");
             } else {
                 if(currentCO2EmissionValue > co2EmissionLimit + co2EmissionLimitHysteresis) {
-                    printLine("CO2 levels are high!");
-                    tool.runSequenceExecuterTool("Red");
+                    printLine("CO2 levels are high!: " + currentCO2EmissionValue);
+                    tool.runSequenceExecuterTool("LedSetRed.xml");
                     /*while(!tool.runSequenceExecuterTool("Red") && retryAttempts < 5 ) {    
                         retryAttempts++;
                         printLine("Retrying to run Sequence Executer Tool: " + retryAttempts);
-                    }*/
-                    retryAttempts = 0;
+                    }
+                    retryAttempts = 0;*/
                 } else if (currentCO2EmissionValue < co2EmissionLimit - co2EmissionLimitHysteresis) {
-                    printLine("CO2 levels are low!.");
-                    tool.runSequenceExecuterTool("Green");
+                    printLine("CO2 levels are low!: " + currentCO2EmissionValue);
+                    tool.runSequenceExecuterTool("LedSetGreen.xml");
                     /*while(!tool.runSequenceExecuterTool("Green") && retryAttempts < 5 ) {    
                         retryAttempts++;
                         printLine("Retrying to run Sequence Executer Tool: " + retryAttempts);
-                    }*/
-                    retryAttempts = 0;
+                    }
+                    retryAttempts = 0;*/
                 } else {
-                    printLine("CO2 levels within hysteresis limits.");
+                    printLine("CO2 levels within hysteresis limits: " + currentCO2EmissionValue);
                 }
             }
             
@@ -141,18 +144,20 @@ public class CO2EmissionIndicator {
             line = dummy; // this will eventually get the last line.
         }
         String[] entry = line.split(";");
-        co2Emission = Integer.parseInt(entry[16].replaceAll("\\s", ""));
+        if(entry.length>16){
+            co2Emission = Integer.parseInt(entry[16].replaceAll("\\s", ""));
+        }
         return co2Emission;
     }
     
-    private boolean runSequenceExecuterTool(String color){
+    private boolean runSequenceExecuterTool(String xmlFileName){
         try {
-            printLine("Running sequence: " + color);
+            printLine("Running sequence: " + xmlFileName);
             
             class OneShotTask implements Runnable {
-                String color;
-                OneShotTask(String s) { 
-                    color = s; 
+                String xmlFileName;
+                OneShotTask(String name) { 
+                    xmlFileName = name; 
                 }
                 @Override
                 public void run() {
@@ -163,11 +168,11 @@ public class CO2EmissionIndicator {
                     args[2] = "-toolSettingsPath"; 
                     args[3] = "settings.xml";
                     args[4] = "-XMLscript";
-                    args[5] = "C:/Users/ReneNilsson/Documents/GitHub/TIIPWI/MiniProject/CO2EmissionIndicator/LedSet"+color+".xml";
+                    args[5] = xmlFileName;
                     seTool.main(args);
                 }
             };
-            Thread seThread  = new Thread(new OneShotTask(color));
+            Thread seThread  = new Thread(new OneShotTask(xmlFileName));
             seThread.start();
             
             boolean success = false;
@@ -185,7 +190,7 @@ public class CO2EmissionIndicator {
                 }
             }
             
-            printLine("Status: "+success+"\n\r");
+            //printLine("Status: "+success+"\n\r");
             
             
             return success;

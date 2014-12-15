@@ -1,1 +1,0 @@
-java -Dlogback.configurationFile=file:logback.xml -jar "C:\Users\ReneNilsson\Documents\GitHub\TIIPWI\MiniProject\CO2EmissionIndicator\Sequence_Executer_Tool.jar" -enableGUI false -toolSettingsPath "C:\Users\ReneNilsson\Desktop\SequenceExecTool\SequenceExecTool\settings.xml" -XMLscript "C:\Users\ReneNilsson\Documents\GitHub\TIIPWI\MiniProject\CO2EmissionIndicator\LedSetGreen.xml"
