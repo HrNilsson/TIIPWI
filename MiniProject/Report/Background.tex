@@ -16,22 +16,39 @@
 			\item Online data
 		\end{itemize}
 
-		\subsubsection{Prognosis} % (fold)
-		\label{sub:prognosis}
-			
+		All data is given in amount of CO$_2$ per unit of energy, in this case 
+		$\sfrac{grams\ CO_2}{kWh}$.
+		This format is a very god representation for our use case.
+		That is because it gives a good holistic of how big a fraction of the energy is from sustainable or \emph{green} sources.
+		
+		This is in contrast to e.g. a measure of CO$_2$ emission per hour.
+		Such a measure will be greatly influenced by total energy production/consumption, without regard for situations where there for example is an over production of green wind power.
 
-			
-		% subsection prognosis (end)
+
+		\subsubsection{Prognosis data} % (fold)
+		\label{sub:prognosis}
+			Prognosis data is a prediction of how much power is going to be consumed over the coming 24 hours in 1 hour increments.
+			The prognosis is released every day at 15:00 when all energy producers report in their expected production and demand.
+			These expectations are based on complex models taking into account factors like history, weather forecast and season.
+			After its release the prognosis can be gradually adjusted with 15 min. intervals if supply/demand changes, influenced by e.g. abnormal consumption or influence from the Scandinavian energy exchange Nord Pool Spot.
+			\fxnote{Reference to NordPool}
+
+			With data about the individual sources of power (large regional power plants, biomass burning municipal power plants, wind/solar, etc.) an estimate of the average CO$_2$ emission per kWh is then produced.
+
+			% subsection prognosis (end)
 
 		\subsubsection{Online data} % (fold)
 		\label{sub:online_data}
+			Contrary to the prognosis data described in Section \ref{sub:prognosis} above the online data is real-time data on actual production of electricity and hence CO$_2$.
+
+
 		
-		% subsection online_data (end)
+			% subsection online_data (end)
 
 		% subsection c02_emission_data (end)
 
 
-% section background (end)
+	% section background (end)
 
 
 \end{document}
