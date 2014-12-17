@@ -6,14 +6,16 @@
 \section{Introduction} % (fold)
 \label{sec:introduction}
 	Multiple studies have shown that a reduction in electricity consumption can be achieved by providing the end-user with information such as electricity cost and CO$_2$ emission\cite{Tricascade:2009:Online}. 
-	This report describes a mini-project made in the Internet of Things course at Aarhus University School of Engineering. 
+	This report describes a mini-project made in the \textit{Wireless IP and Internet of Things} course at Aarhus University School of Engineering. 
 	The purpose of the mini-project is to implement a system that can provide the users of an elevator with an indication of current CO$_2$ emissions caused by the electricity production needed to power the elevator. 
 	An LED device placed on the elevator will blink red during high emission and green during low emission. 
 	Thereby the users are encouraged to consider taking the stairs when the LED is blinking red. 
 
+	The system should acquire CO$2$ emission data from a server provided by the Danish Transmission System Operator. 
+	Upon reception the data should be processed to figure out whether the emission is high or low, and the LED device controlled accordingly.
 
-	
-
+	This scope of this mini-project is limited to implementing a \textit{proof-of-concept} system which can control the color of the blinking LED device based on the CD$_2$ data.
+	As such, the actual implementation with remote servers and elevators is beyond the scope.
 
 
 
