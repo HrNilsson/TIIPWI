@@ -6,10 +6,23 @@
 \section{Design, implementation and test setup} % (fold)
 \label{sec:design_implementation_test_setup}
 
-	\subsection{System description}
+	\subsection{System Description}
+		The main functional blocks of the system are shown in Figure \ref{fig:sysDesc}. 
+		CO$_2$ emission data is acquired from the FTP server by the Java application. The Java application determines whether the emission is high or low and transmits the corresponding control message to the ZigBee LED device. 
+		The Sequence Executor Tool is used by the Java application for managing the communication with the ZigBee LED device. 
+		By specifying the address of the SmartAMM server, ZigBee gateway ID and ZigBee LED device ID, the Java application is able to communicate with the ZigBee LED device.  
+
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{SystemDescription}
+		\caption{System description}
+		\label{fig:sysDesc}
+		\end{figure}
 
 
-	\subsection{Decision making}
+
+
+	\subsection{Decision Making}
 
 
 
@@ -19,11 +32,11 @@
 		
 
 
-	\subsection{CO2 Emission Tool}
+	\subsection{Application}
 
 
 
-	\subsection{Communication protocols}
+	\subsection{Communication Protocols}
 		% Zigbee - Ivan Starter
 		% Web protokoller - Ivan Starter
 		% Det sidste
