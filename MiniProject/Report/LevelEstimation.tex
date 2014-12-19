@@ -15,9 +15,22 @@
 	The available data is described in Section \ref{sub:c02_emission_data}.
 	For this project it is elected to use the \emph{online} data, as this fits our use case best.
 	Firstly, because \emph{prognosis} data about future levels are not very useful for a user, as people are unlikely to postpone the use of the elevator, even with the knowledge of any potential savings from doing so.
-	Secondly, 
+	Secondly, the short time nature of elevator use fits very well with the short time nature of the \emph{online} data.
+ 
+-		% subsection co__2_level_estimation (end)
 
-	% subsection co__2_level_estimation (end)
+	\subsubsection{Decision Making} % (fold)
+	\label{sub:decision_making}
+
+		Making a decision on whether CO$_2$ emission levels are \emph{HIGH} or \emph{LOW} requires a threshold, distinguishing the two, to be set.
+		For this project a threshold of $340\ grams\ \sfrac{CO_2}{kWh}$ is set.
+		This level the Danish national average from 2012, provided by Energistyrelsen \cite{Energistyrelsen:2012:Online}.
+
+		To reduce flickering between \emph{HIGH} and \emph{LOW} with insignificant change in CO$_2$ emission levels, some hysteresis has been implemented.
+		This means that the data must drop $3\ grams\ \sfrac{CO_2}{kWh}$ below the threshold to change from \emph{HIGH} to \emph{LOW}.
+		Likewise the data must rise $3\ grams\ \sfrac{CO_2}{kWh}$ above the threshold to change from \emph{LOW} to \emph{HIGH}.
+	
+		% sub-subsection decision_making (end)
 
 
 \end{document}
