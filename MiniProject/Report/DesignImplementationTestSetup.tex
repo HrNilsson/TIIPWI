@@ -59,7 +59,7 @@
 			Instead of editing directly in the telegram defined in the step section, only the substitute texts need to be changed in order to set the LED red or green. 
 
 			The last items in the sequence files are steps. 
-			In both files shown in Appendix A there are two steps. 
+			In both files shown in \ref{sec:appendix_a} there are two steps. 
 			The first step in both files is used to connect to the gateway.
 			The second step is used to transmit either an authorization telegram or a LED setting telegram.
 			Each step contains a textual representation of the telegram to be transmitted, receive filters, an approval section and a general step description including a timeout interval.
@@ -93,22 +93,25 @@
 			Afterwards the application will download data from the FTP server, parse the data and set the LED red or green based on the parsed data.
 			This is done approximately every 5 minutes, since new data is available from the FTP server.
 
-			\begin{lstlisting}[caption=Program Flow, style=Code-C, label=code:program_flow]
-				// Authorize ZigBee LED device
-				run SequenceExecutorTool with Authoritation sequence
+			\begin{figure}[H]
+				\begin{lstlisting}[caption=Program Flow, style=Code-C, label=code:program_flow]
+					// Authorize ZigBee LED device
+					run SequenceExecutorTool with Authoritation sequence
 
-				// Update LED
-				while() {
-					CO2Level = GetCO2EmissionData from FTP server
-					if (CO2Level > highThreshold)
-						run SequenceExecutorTool with Red blinking sequence
-					else if (CO2Level < lowThreshold)
-						run SequenceExecutorTool with Green blinking sequence
-					else
-						//Do nothing - hysteresis
-					Sleep for 4 minutes
-				}
-			\end{lstlisting}
+					// Update LED
+					while() {
+						CO2Level = GetCO2EmissionData from FTP server
+						if (CO2Level > highThreshold)
+							run SequenceExecutorTool with Red blinking sequence
+						else if (CO2Level < lowThreshold)
+							run SequenceExecutorTool with Green blinking sequence
+						else
+							//Do nothing - hysteresis
+						Sleep for 4 minutes
+					}
+				\end{lstlisting}
+			\end{figure}
+				
 
 		\subsubsection{Data Collection}
 		\label{sub:data_collection}
@@ -117,41 +120,52 @@
 			An connection is established with the FTP server, and the necessary login is provided.
 			Once the login is accepted, the file containing the CO$_2$ data of the day is downloaded and parsed, and the FTP connection is disconnected.
 
-			\begin{lstlisting}[caption=Download CO2 data, style=Code-C, label=code:download_co2_data]
-				server = "ftp.energinet.dk";
-        		port = 21;
-				FTPClient.connect(server,port);
-				FTPClient.login(username,password);
+			\begin{figure}[H]
+				\begin{lstlisting}[caption=Download CO2 data, style=Code-C, label=code:download_co2_data]
+					server = "ftp.energinet.dk";
+	        		port = 21;
+					FTPClient.connect(server,port);
+					FTPClient.login(username,password);
 
-				date = getTime formatted as "yyyyMMdd";
-				remoteFile = "/Onlinedata/"+date+"_onlinedata.txt"
+					date = getTime formatted as "yyyyMMdd";
+					remoteFile = "/Onlinedata/"+date+"_onlinedata.txt"
 
-				inputStream = FTPClient.retrieveFileStream(remoteFile);
+					inputStream = FTPClient.retrieveFileStream(remoteFile);
 
-				mostRecentCo2Data = parseFTPFile(inputStream);
+					mostRecentCo2Data = parseFTPFile(inputStream);
 
-				FTPClient.completePendingCommand();
-				FTPClient.logout();
-				FTPClient.disconnect();
-			\end{lstlisting}
+					FTPClient.completePendingCommand();
+					FTPClient.logout();
+					FTPClient.disconnect();
+				\end{lstlisting}
+			\end{figure}
+
 
 			\paragraph{Data Parsing} % (fold)
 			\label{par:data_parsing}
-				
+				The data retrieved from the FTP server is a file containing data for the day. 
+				It is organized as a table with 20 columns, with a row for every data entry, which is every 5 minutes.
+				In order to retrieve the most recent data the very last row of the table is used.
+				The CO$_2$ emission data is in column 17.
 			% paragraph data_parsing (end)
 
-		\subsubsection{Using Sequence Executor Tool} % (fold)
+		\subsubsection{Using the SET} % (fold)
 		\label{sub:using_sequence_executor_tool}
-			
+			The SET was not develop to be embedded in another application, and thus is not very user friendly in that sense.
+			By calling the main method of the SET, the only feedback from the SET is logs written to the console. 
+			In order to be able to use these logs as a feedback, the output is redirected to the CEI.
+			By using the feedback, it is possible to monitor if the sequence succeeds, fails or times out.
 
-			\paragraph{Output Redirection} % (fold)
-			\label{par:output_redirection}
-				
-			% paragraph output_redirection (end)
+			\paragraph{Timeout and retransmissions} % (fold)
+			\label{par:timeout_and_retransmissions}
+				Unfortunately the SET seems to time out every time, even though the transmission actually succeeds.
+				This means that a smart retransmission scheme cannot be implemented in the CEI. 
+				Instead the \emph{maxRetransmissions} field in the sequence files can be set, to enable retransmissions, if wanted. 
+				In this project \emph{maxRetransmissions} is set to 2, meaning that when the SET times out, the telegram will be retransmitted maximum 2 times, giving a total of 3 transmitted telegrams.
+
+				This gives an unnecessary transmission overhead if the telegram is received correctly, but this is the necessary cost to increase certainty about that the telegram is received.
+			% paragraph timeout_and_retransmissions (end)
 		% subsection using_sequence_executor_tool (end)
-
-
-
 
 	\subsection{Communication Protocols}
 		The system utilizes several different communication technologies.
@@ -164,7 +178,12 @@
 
 
 		\subsubsection{SmartAMM}
-			propreitær protokol udenom zigbee, wrapper protokol. SmartAMM protokol. 
+			SmartAMM is a proprietary protocol and server architecture developed by Develco Products A/S. 
+			SmartAMM makes it possible to monitor and control electrical appliances and energy consumption via smart meters.
+			Is is based on the use of ZigBee, and achieves remote control of ZigBee devices through a gateway\cite{SmartAMM:Online}.
+
+			ZigBee telegrams are wrapped inside of the SmartAMM protocol and transmitted to the gateway, which relays the ZigBee telegram to the ZigBee device as seen in \ref{sec:appendix_a}.
+
 
 		\subsubsection{ZigBee}
 			As the LED device is ZigBee enabled, this is the technology of choice for communication. 
