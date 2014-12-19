@@ -164,7 +164,12 @@
 
 
 		\subsubsection{SmartAMM}
-			propreitær protokol udenom zigbee, wrapper protokol. SmartAMM protokol. 
+			SmartAMM is a proprietary protocol and server architecture developed by Develco Products A/S. 
+			SmartAMM makes it possible to monitor and control electrical appliances and energy consumption via smart meters.
+			Is is based on the use of ZigBee, and achieves remote control of ZigBee devices through a gateway\cite{SmartAMM:Online}.
+
+			ZigBee telegrams are wrapped inside of the SmartAMM protocol and transmitted to the gateway, which relays the ZigBee telegram to the ZigBee device as seen in \ref{sec:appendix_a}.
+
 
 		\subsubsection{ZigBee}
 			As the LED device is ZigBee enabled, this is the technology of choice for communication. 
