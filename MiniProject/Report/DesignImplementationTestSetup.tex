@@ -8,10 +8,10 @@
 
 	\subsection{System Description}
 		The main functional blocks of the system are shown in Figure \ref{fig:sysDesc}. 
-		CO$_2$ emission data is acquired from the FTP server by the Java application. 
-		The Java application determines whether the emission is high or low and transmits the corresponding control message to the ZigBee LED device. 
-		The Sequence Executor Tool is used by the Java application for managing the communication with the ZigBee LED device. 
-		By specifying the address of the SmartAMM server, ZigBee gateway ID and ZigBee LED device ID, the Java application is able to communicate with the ZigBee LED device.  
+		CO$_2$ emission data is acquired from the FTP server by the CO$_2$ Emission Indicator (CEI) application. 
+		The CEI application determines whether the emission is high or low and transmits the corresponding control message to the ZigBee LED device. 
+		The Sequence Executor Tool (SET) is used by the CEI application for managing the communication with the ZigBee LED device. 
+		By specifying the address of the SmartAMM server, ZigBee gateway ID and ZigBee LED device ID, the CEI application is able to communicate with the ZigBee LED device.  
 
 		\begin{figure}[H]
 		\centering
@@ -123,7 +123,23 @@
 			The LED device and gateway are both setup as HA devices. 
 
 			\subsubsection{Commissioning}
-				Commissioning   
+				Commissioning is the term used for establishing a ZigBee network.
+				A ZigBee network must contain one ZigBee Coordinator (ZC) and one or more ZigBee Routers(ZR) and ZigBee End Devices(ZED). 
+				The ZC is responsible for maintaining the network by transmitting beacons, which provide information to other nodes (both associated and non-associated) about the network.
+
+				One of the non-sleeping devices in a ZigBee network must act as the trust center, which is usually handled by the ZC. 
+				It is the responsibility of the trust center to authorize new device that wish to join the network.
+
+				In this project the ZigBee network is very simple as is consists only of two nodes, the gateway and the LED. 
+				The gateway is the ZC and acts as trust center as well, whilst the LED is a ZED.
+				The LED device is authorized to join the network by adding it's MAC address to the trusted table of the trust center. 
+				This is performed by the CEI application.
+				When the LED device attempts to join the network, the address is recognized as trusted and the device is able to join the network. 
+
+				A consequence of such a simple approach is that the CEI application must be aware of the MAC address of the LED device beforehand. 
+				The address must either be known at compile time, or be input by the user, which would require a user interface. 
+				However in order to implement a proof-of-concept system, this simple approach is appropriate. 
+
 
 			\subsubsection{Security}
 
