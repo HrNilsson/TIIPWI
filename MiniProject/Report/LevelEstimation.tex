@@ -51,32 +51,40 @@
 		In this section some examples of CO$_2$ emission data is presented.
 
 		\begin{figure}[H]
-			\centering
-			\caption{CO$_2$ emission data for a summer day} 
+			\centering 
 			\includegraphics[width=\textwidth]{Summer.eps}
+			\caption{CO$_2$ emission data for a summer day}
+			\label{fig:Summer}
 		\end{figure}
+
+		Figure \ref{fig:Summer} above is a clear example of why adaptive thresholding is necessary.
+		At no point during this day does the CO$_2$ emission rise above the global threshold.
+		It also shows that, at least on this day, there were a strong negative correlation between temperature and CO$_2$ emission.
+		The wind does not seen to fluctuate much or have much effect on CO$_2$, and hence it has been dropped from the following figures.
 
 
 		\begin{figure}[H]
 			\centering
-			\caption{CO$_2$ emission data for an autum day} 
-			\includegraphics[width=\textwidth]{Autum.eps}
+			\includegraphics[width=0.9\textwidth]{Autum.eps}
+			\caption{CO$_2$ emission data for an Autumn day}
+			\label{fig:Autum}
 		\end{figure}
+
+		Figure \ref{fig:Autum} above show a normal autumn day. Here the CO$_2$ emission level is both above and below the threshold.
 
 
 		\begin{figure}[H]
 			\centering
-			\caption{CO$_2$ emission data for a winter day} 
-			\includegraphics[width=\textwidth]{Winter.eps}
+			\includegraphics[width=0.9\textwidth]{Winter.eps}
+			\caption{CO$_2$ emission data for a winter day}
+			\label{fig:Winter}
 		\end{figure}
 		% subsection trends_in_co2_data (end)
 
-		
+		Figure \ref{fig:Winter} show a normal winter day.
+		Again we see a case where the CO$_2$ emission levels fluctuate a lot during a day, but does not cross the average threshold.
 
-		
-	
-
-
+		What we see in Figures \ref{fig:Summer}, \ref{fig:Autum} and \ref{fig:Winter} above, confirms our assumption of season shift and the necessity of a more complex CO$_2$ emission trends model.
 		
 
 \end{document}
