@@ -28,7 +28,7 @@
 
 	\newpage
 	\subsection{Sequence Executor Tool}
-		The Sequence Executor Tool, which is provided by Develco Products, is a Java application able to communicate with ZigBee devices through a SmartAMM server.
+		The SET, which is provided by Develco Products, is a Java application able to communicate with ZigBee devices through a SmartAMM server.
 		It requires two input files: A \emph{setting} file and a \emph{sequence} file.
 
 		\subsubsection{Setting file}
@@ -45,7 +45,7 @@
 			The \emph{sequence} file is also an XML file, specifying the sequence of telegrams to be sent to the ZigBee device, including gateway and device IDs. 
 			It also specifies how to determine whether the telegram was successfully receive. 
 			In this project positive acknowledgment are used as an indicator for successful transmission.
-			In \ref{sec:appendix_a} the XML files for authorizing the ZigBee end device on the network, and setting the LED green is shown.
+			In \ref{sec:appendix_a} the XML files for authorizing the LED device on the network, and setting the LED green is shown.
 			Each sequence file contains the following items: 
 			\begin{itemize}
 				\item General sequence descriptions
@@ -65,7 +65,7 @@
 			Each step contains a textual representation of the telegram to be transmitted, receive filters, an approval section and a general step description including a timeout interval.
 
 			The receive filter is used to sort incoming telegrams, so that the correct telegram is used to verify the transmission status. 
-			In the authorizing sequence, the receive filters sort for a device announce from the ZigBee device with the correct ID.
+			In the authorizing sequence, the receive filters sort for a device announce from the LED device with the correct ID.
 			
 			The approval fields are used to validate the status of the telegram that gets through the receive filters. 
 			In the Set LED Green sequence the received telegram must contain a \emph{Status} field with the value \emph{Success}.
@@ -76,21 +76,69 @@
 			And if everything goes well, the end status is \emph{Success}.
 
 		\subsubsection{Application interface}
-			The Sequence Executor Tool is available as a .jar file, and can thus be included in a Java application, from which the main method of the Sequence Executor Tool can be called.
+			The SET is available as a .jar file, and can thus be included in a Java application, from which the main method of the SET can be called.
 
 
-	\subsection{Application}
-		\subsubsection{Program Flow}
-		\label{sub:program_flow}
+	\subsection{CO$_2$ Emission Indicator Application}
+		The CEI application developed in this project is a Java based command line application. 
+		Using Java, eases the use of the SET, since this is also Java based. 
+		Additionally, Java is a platform independent language, meaning that the application can be run on all platforms. 
+		In the following subsections the main implementation concepts is presented.
 
+		\subsubsection{Application Flow}
+		\label{sub:application_flow}
+			The application flow is split into two parts. 
+			In code snippet \ref{code:program_flow} a pseudo code for the program flow is shown.
+			Initially and only once the application will authorize the LED device on the network.
+			Afterwards the application will download data from the FTP server, parse the data and set the LED red or green based on the parsed data.
+			This is done approximately every 5 minutes, since new data is available from the FTP server.
+
+			\begin{lstlisting}[caption=Program Flow, style=Code-C, label=code:program_flow]
+				// Authorize ZigBee LED device
+				run SequenceExecutorTool with Authoritation sequence
+
+				// Update LED
+				while() {
+					CO2Level = GetCO2EmissionData from FTP server
+					if (CO2Level > highThreshold)
+						run SequenceExecutorTool with Red blinking sequence
+					else if (CO2Level < lowThreshold)
+						run SequenceExecutorTool with Green blinking sequence
+					else
+						//Do nothing - hysteresis
+					Sleep for 4 minutes
+				}
+			\end{lstlisting}
 
 		\subsubsection{Data Collection}
 		\label{sub:data_collection}
+			To download the data from the FTP server a FTPClient\cite{FTPClient:Online} is used. 
+			In code snippet \ref{code:download_co2_data} the pseudo code for getting data from the FTP server is shown. 
+			An connection is established with the FTP server, and the necessary login is provided.
+			Once the login is accepted, the file containing the CO$_2$ data of the day is downloaded and parsed, and the FTP connection is disconnected.
 
+			\begin{lstlisting}[caption=Download CO2 data, style=Code-C, label=code:download_co2_data]
+				server = "ftp.energinet.dk";
+        		port = 21;
+				FTPClient.connect(server,port);
+				FTPClient.login(username,password);
 
-		\subsubsection{Data Parsing}
-		\label{sub:data_parsing}
+				date = getTime formatted as "yyyyMMdd";
+				remoteFile = "/Onlinedata/"+date+"_onlinedata.txt"
 
+				inputStream = FTPClient.retrieveFileStream(remoteFile);
+
+				mostRecentCo2Data = parseFTPFile(inputStream);
+
+				FTPClient.completePendingCommand();
+				FTPClient.logout();
+				FTPClient.disconnect();
+			\end{lstlisting}
+
+			\paragraph{Data Parsing} % (fold)
+			\label{par:data_parsing}
+				
+			% paragraph data_parsing (end)
 
 		\subsubsection{Using Sequence Executor Tool} % (fold)
 		\label{sub:using_sequence_executor_tool}
