@@ -8,7 +8,8 @@
 
 	\subsection{System Description}
 		The main functional blocks of the system are shown in Figure \ref{fig:sysDesc}. 
-		CO$_2$ emission data is acquired from the FTP server by the Java application. The Java application determines whether the emission is high or low and transmits the corresponding control message to the ZigBee LED device. 
+		CO$_2$ emission data is acquired from the FTP server by the Java application. 
+		The Java application determines whether the emission is high or low and transmits the corresponding control message to the ZigBee LED device. 
 		The Sequence Executor Tool is used by the Java application for managing the communication with the ZigBee LED device. 
 		By specifying the address of the SmartAMM server, ZigBee gateway ID and ZigBee LED device ID, the Java application is able to communicate with the ZigBee LED device.  
 
@@ -83,6 +84,31 @@
 
 
 	\subsection{Communication Protocols}
+		The system utilizes several different communication technologies.
+
+		\subsection{FTP}
+			File Transfer Protocol over TCP
+
+
+		\subsection{SmartAMM}
+			propreitær protokol udenom zigbee, wrapper protokol. SmartAMM protokol. 
+
+		\subsection{ZigBee}
+			As the LED device is ZigBee enabled, this is the technology of choice for communication. 
+			ZigBee is a low power and low data rate wireless protocol for personal area networks. 
+			The lower layers(MAC and PHY) of the protocol are based on the IEEE 802.15.4 standard\cite{ZigBeeSpec}, whereas higher layers such as network and application have been defined by the ZigBee Alliance.
+			ZigBee features a range of different application profiles including Home Automation (HA), Building Automation, Light Link, Smart Energy etc\cite{ZigBeeApplicationProfiles:Online}.
+			The LED device and gateway are both setup as HA devices. 
+
+			\subsubsection{Commissioning}
+				Commissioning   
+
+			\subsubsection{Security}
+
+			
+			% subsection subsection_name (end)
+
+
 		% Zigbee - Ivan Starter
 		% Web protokoller - Ivan Starter
 		% Det sidste
