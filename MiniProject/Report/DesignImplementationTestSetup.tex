@@ -156,21 +156,24 @@
 	\subsection{Communication Protocols}
 		The system utilizes several different communication technologies.
 
-		\subsection{FTP}
-			File Transfer Protocol over TCP
+		\subsubsection{FTP}
+			The File Transfer Protocol is used to fetch CO$_2$ data from the Danish Transmission System Operator server.
+			FTP is a standard network protocol used to transfer files between hosts on a TCP-based network\cite{FTPWikipedia:Online}.
+			FTP is built on a client/server architecture and uses separate control and data connections between the client and the server\cite{TCPIPProtocol}.
+			Authentication is in this project handled by a user name and password.  
 
 
-		\subsection{SmartAMM}
+		\subsubsection{SmartAMM}
 			propreitær protokol udenom zigbee, wrapper protokol. SmartAMM protokol. 
 
-		\subsection{ZigBee}
+		\subsubsection{ZigBee}
 			As the LED device is ZigBee enabled, this is the technology of choice for communication. 
 			ZigBee is a low power and low data rate wireless protocol for personal area networks. 
 			The lower layers(MAC and PHY) of the protocol are based on the IEEE 802.15.4 standard\cite{ZigBeeSpec}, whereas higher layers such as network and application have been defined by the ZigBee Alliance.
 			ZigBee features a range of different application profiles including Home Automation (HA), Building Automation, Light Link, Smart Energy etc\cite{ZigBeeApplicationProfiles:Online}.
 			The LED device and gateway are both setup as HA devices. 
 
-			\subsubsection{Commissioning}
+			\paragraph{Commissioning} % (fold)
 				Commissioning is the term used for establishing a ZigBee network.
 				A ZigBee network must contain one ZigBee Coordinator (ZC) and one or more ZigBee Routers(ZR) and ZigBee End Devices(ZED). 
 				The ZC is responsible for maintaining the network by transmitting beacons, which provide information to other nodes (both associated and non-associated) about the network.
@@ -186,16 +189,32 @@
 
 				A consequence of such a simple approach is that the CEI application must be aware of the MAC address of the LED device beforehand. 
 				The address must either be known at compile time, or be input by the user, which would require a user interface. 
-				However in order to implement a proof-of-concept system, this simple approach is appropriate. 
+				However in order to implement a proof-of-concept system, this simple approach is appropriate. 			
+			\label{par:commissioning}
+			
+			% paragraph commissioning (end){Commissioning}
 
 
-			\subsubsection{Security}
+
+			\paragraph{Security} % (fold)
+				In a ZigBee network the security is mandated by the application profile in use, in this case this is the HA profile.
+				A trust center link key has been defined in the HA profile\cite{HASpec}:
+				\begin{equation}
+					0x5A\ 0x69\ 0x67\ 0x42\ 0x65\ 0x65\ 0x41\ 0x6C\ 0x6C\ 0x69\ 0x61\ 0x6E\ 0x63\ 0x65\ 0x30\ 0x39	
+				\end{equation}
+				
+				The trust center must pick a network key. The network key is sent to new devices encrypted with the trust center link key.
+				A 128-bit AES encryption is used.
+				This is the lowest security setting in the HA profile, and has been chosen for this project. 
+				Alternatively pre-configured link keys can be specifically associated with the different devices of a network.
+			\label{par:security}
+			
+			% paragraph security (end)
 
 			
 			% subsection subsection_name (end)
 
 
-		% Zigbee - Ivan Starter
 		% Web protokoller - Ivan Starter
 		% Det sidste
 
