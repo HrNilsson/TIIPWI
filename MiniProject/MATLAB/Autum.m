@@ -17,7 +17,7 @@ title('Data for October 15th')
 xlabel('Time')
 
 ylabel(hAx(1),'gram CO_2 / kWh') % left y-axis
-ylabel(hAx(2),'Wind [m/s] | Temperature [C]') % right y-axis
+ylabel(hAx(2),'Temperature [C]') % right y-axis
 
 m_CO2 = mean(CO2)
 plot(Time,ones(size(CO2))*m_CO2, '--k')   % Dayly mean
