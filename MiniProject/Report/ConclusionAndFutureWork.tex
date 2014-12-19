@@ -5,6 +5,26 @@
 
 \section{Conclusion and future work} % (fold)
 \label{sec:conclusionandfuturework}
+	In this project a proof-of-concept (PoC) system for indicating current real-time CO$_2$ emission levels to elevator users was implemented.
+	This was done with the purpose of changing behavior in people, to make them want to take the stairs, when CO$_2$ emissions are high. 
+
+	The PoC system functions as intended, being able to fetch current CO$_2$ emission data from the Internet, and presenting it in a semantically easy to understand way to the user.
+	The system has yet to be deployed in a real-life situation, to test its impact on human behavior.
+
+	Some issues remain to be tackled before a final version can be deployed:
+
+	\begin{itemize}
+		\item 
+			A better model for seasonal trends in CO$_2$ emission needs to be developed in order to ultimately make the the information provided truly useful.
+
+		\item
+			As of this writing, the middle-ware used by the application does not allow for radio acknowledgments to be passed to the application.
+			This results in a communication overhead from excess retransmissions needed to ensure an appropriate Quality of Service.
+
+		\item 
+			A thorough analysis of power consumption in the battery powered end device is needed to guarantee sufficient battery life.
+
+	\end{itemize}
 
 % section conclusionandfuturework (end)
 
