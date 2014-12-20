@@ -79,55 +79,19 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "Main.tex",
-			"settings":
-			{
-				"buffer_size": 1065,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "LevelEstimation.tex",
-			"settings":
-			{
-				"buffer_size": 2674,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 375.0,
+		"height": 160.0,
 		"selected_items":
 		[
 			[
-				"git ps",
+				"git pus",
 				"Git: Push"
 			],
 			[
-				"git pull",
-				"Git: Pull"
-			],
-			[
-				"git com",
-				"Git: Commit"
-			],
-			[
-				"git ad",
-				"Git: Add..."
-			],
-			[
-				"git q",
-				"Git: Quick Commit"
-			],
-			[
-				"git pu",
-				"Git: Pull"
-			],
-			[
-				"git co",
+				"git c",
 				"Git: Commit"
 			],
 			[
@@ -135,20 +99,52 @@
 				"Git: Add..."
 			],
 			[
+				"git p",
+				"Git: Push"
+			],
+			[
+				"git pul",
+				"Git: Pull"
+			],
+			[
+				"git co",
+				"Git: Commit"
+			],
+			[
+				"git ps",
+				"Git: Push"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git pu",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git s",
+				"Git: Status"
+			],
+			[
+				"git pull",
+				"Git: Pull"
+			],
+			[
+				"git q",
+				"Git: Quick Commit"
+			],
+			[
 				"git lg",
 				"Git: Log All"
 			],
 			[
-				"git pus",
-				"Git: Push"
-			],
-			[
 				"git cu",
 				"Git: Custom Command"
-			],
-			[
-				"git pul",
-				"Git: Pull Using Rebase"
 			],
 			[
 				"git st",
@@ -163,24 +159,12 @@
 				"Git: Diff All Files"
 			],
 			[
-				"git s",
-				"Git: Status"
-			],
-			[
 				"git gr",
 				"Git: Graph All"
 			],
 			[
 				"git cus",
 				"Git: Custom Command"
-			],
-			[
-				"git p",
-				"Git: Pull"
-			],
-			[
-				"git c",
-				"Git: Commit"
 			],
 			[
 				"matla",
@@ -412,27 +396,22 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/C/Users/Kasper/Documents/GitHub",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI - Copy",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI - Copy/MiniProject",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI - Copy/MiniProject/Report"
-	],
 	"file_history":
 	[
+		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Preamble.tex",
+		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/ConclusionAndFutureWork.tex",
+		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Introduction.tex",
+		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Main.tex",
+		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Modules/FigureSetup.tex",
+		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Background.tex",
+		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/LevelEstimation.tex",
+		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/TIIPWI_Report.sublime-project",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Appendix.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/References.bib",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Background.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/DesignImplementationTestSetup.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Main.bbl",
 		"/C/Users/Kasper/Dropbox/Skole/TI2/TIIPWI1/TIIPWI_share/Mini project/Nøgletal2012_Energistyrelsen.txt",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI - Copy/.git/COMMIT_EDITMSG",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Main.tex",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/LevelEstimation.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/HEEEELLLPPP",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI - Copy/MiniProject/Report/HEEEELLLPPP.tex",
 		"/C/Users/Kasper/Dropbox/Skole/LaTeX_Kursus/Opgavebesvarelse/filer/opgave9.tex",
@@ -450,7 +429,6 @@
 		"/C/Users/Kasper/Documents/GitHub/TIADEM/MiniProject/MATLAB/pqfile.txt",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/MATLAB/20140720_onlinedata.txt",
 		"/C/Users/Kasper/AppData/Roaming/Sublime Text 3/Packages/User/DictionaryAutoComplete.sublime-settings",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Introduction.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/MATLAB/InputData.m",
 		"/C/Users/Kasper/Documents/GitHub/TIADEM/MiniProject/MATLAB/InputData.m",
 		"/C/Users/Kasper/Documents/GitHub/TIADEM/MiniProject/Disposition.txt",
@@ -466,9 +444,7 @@
 		"/C/Users/Kasper/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Users/Kasper/AppData/Roaming/Sublime Text 3/Packages/User/Matlab.sublime-build",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Modules/OtherMath.tex",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Preamble.tex",
 		"/C/Users/Kasper/Documents/GitHub/TiNONS/Document/Appendix/PGM_app.tex",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Modules/FigureSetup.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/.gitignore",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Main.log",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/20141201_CO2prognose.csv",
@@ -476,7 +452,6 @@
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/References.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/subfile.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/Experiments.tex",
-		"/C/Users/Kasper/Documents/GitHub/TIIPWI/MiniProject/Report/ConclusionAndFutureWork.tex",
 		"/C/Users/Kasper/Documents/GitHub/Latex/Modules/ChapterStyle.tex",
 		"/C/Users/Kasper/Documents/GitHub/TIWSNE/MiniProject/ImageCompressionSource/ImageCompression/src/doc/nesdoc/telosb/index.html",
 		"/C/Users/Kasper/Documents/GitHub/TIWSNE/MiniProject/ImageCompressionSource/ImageCompression/src/ImageCompressionC.nc",
@@ -550,12 +525,11 @@
 		"/C/Users/Kasper/Dropbox/Skole/TI2/TISOE1/Exam/4. Software Quality",
 		"/C/Users/Kasper/Dropbox/Skole/TI2/TISOE1/Exam/Exam topics",
 		"/C/Users/Kasper/Dropbox/Skole/TI2/TISOE1/Exam/9. Reliability and Fault Tolerance",
-		"/C/Users/Kasper/Dropbox/Skole/TI2/TISOE1/Exam/8. Safety Critical Systems",
-		"/C/Users/Kasper/Dropbox/Skole/TI2/TISOE1/Exam/7. Reuse"
+		"/C/Users/Kasper/Dropbox/Skole/TI2/TISOE1/Exam/8. Safety Critical Systems"
 	],
 	"find":
 	{
-		"height": 22.0
+		"height": 46.0
 	},
 	"find_in_files":
 	{
@@ -609,176 +583,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "Main.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1065,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								451,
-								451
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 1,
-					"file": "LevelEstimation.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2674,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2599,
-								2599
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 81.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -799,18 +605,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -852,11 +651,15 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"selected_items":
 		[
+			[
+				"",
+				"C:\\Users\\Kasper\\Documents\\GitHub\\TIIPWI\\MiniProject\\Report\\TIIPWI_Report.sublime-project"
+			]
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
@@ -866,7 +669,7 @@
 		],
 		"width": 464.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},
