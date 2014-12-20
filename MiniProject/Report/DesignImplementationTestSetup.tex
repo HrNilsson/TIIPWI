@@ -123,7 +123,7 @@
 			\begin{figure}[H]
 				\begin{lstlisting}[caption=Download CO2 data, style=Code-C, label=code:download_co2_data]
 					server = "ftp.energinet.dk";
-	        		port = 21;
+					port = 21;
 					FTPClient.connect(server,port);
 					FTPClient.login(username,password);
 
@@ -181,7 +181,7 @@
 		\subsubsection{SmartAMM}
 			SmartAMM is a proprietary protocol and server architecture developed by Develco Products A/S. 
 			SmartAMM makes it possible to monitor and control electrical appliances and energy consumption via smart meters.
-			Is is based on the use of ZigBee, and achieves remote control of ZigBee devices through a gateway\cite{SmartAMM:Online}.
+			It is based on the use of ZigBee, and achieves remote control of ZigBee devices through a gateway\cite{SmartAMM:Online}.
 
 			ZigBee telegrams are wrapped inside of the SmartAMM protocol and transmitted to the gateway, which forwards the ZigBee telegram to the ZigBee device as seen in \ref{sec:appendix_a}.
 

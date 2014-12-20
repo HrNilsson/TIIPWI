@@ -23,12 +23,12 @@
 	\label{sub:decision_making}
 
 		Making a decision on whether CO$_2$ emission levels are \emph{HIGH} or \emph{LOW} requires a threshold, distinguishing the two, to be set.
-		For this project a threshold of $340\ grams\ \sfrac{CO_2}{kWh}$ is set.
+		For this project a threshold of $340\ \sfrac{g}{kWh}$ is set.
 		This level is the Danish national average from 2012, provided by Energistyrelsen \cite{Energistyrelsen:2012:Online}.
 
 		To reduce flickering between \emph{HIGH} and \emph{LOW} with insignificant change in CO$_2$ emission levels, some hysteresis has been implemented.
-		This means that the data must drop $3\ grams\ \sfrac{CO_2}{kWh}$ below the threshold to change from \emph{HIGH} to \emph{LOW}.
-		Likewise the data must rise $3\ grams\ \sfrac{CO_2}{kWh}$ above the threshold to change from \emph{LOW} to \emph{HIGH}.
+		This means that the data must drop $5\ \sfrac{g}{kWh}$ below the threshold to change from \emph{HIGH} to \emph{LOW}.
+		Likewise the data must rise $5\ \sfrac{g}{kWh}$ above the threshold to change from \emph{LOW} to \emph{HIGH}.
 	
 		% sub-subsection decision_making (end)
 
@@ -40,7 +40,7 @@
 		It is hypothesized that such monotony in level indication would lead to users ignoring the signal and go back to their normal habits.
 
 		Comprehensive modeling of CO$_2$ emissions and user susceptibility to input is beyond the scope of this project.
-		Even though, some analysis of CO$_2$ emissions trend is presented in Section \ref{sub:trends_in_co2_data} below for the sake of completeness and enabling future improvement.
+		Even though, some analysis of CO$_2$ emissions trend is presented in Section \ref{sub:trends_in_co2_data} for the sake of completeness and enabling future improvement.
 
 		% sub-subsection shortcomings_and_future_work (end)
 
@@ -57,7 +57,7 @@
 			\label{fig:Summer}
 		\end{figure}
 
-		Figure \ref{fig:Summer} above is a clear example of why adaptive thresholding is necessary.
+		Figure \ref{fig:Summer} is a clear example of why adaptive thresholding is necessary.
 		At no point during this day does the CO$_2$ emission rise above the threshold.
 		It also shows that, at least on this day, there were a strong negative correlation between temperature and CO$_2$ emission.
 		The wind does not seen to fluctuate much or have much effect on CO$_2$, and hence it has been dropped from the following figures.
@@ -70,7 +70,7 @@
 			\label{fig:Autum}
 		\end{figure}
 
-		Figure \ref{fig:Autum} above show a normal autumn day. Here the CO$_2$ emission level is both above and below the threshold.
+		Figure \ref{fig:Autum} show a normal autumn day. Here the CO$_2$ emission level is both above and below the threshold.
 
 
 		\begin{figure}[H]
@@ -84,7 +84,7 @@
 		Figure \ref{fig:Winter} show a normal winter day.
 		Again we see a case where the CO$_2$ emission levels fluctuate a lot during a day, but does not cross the average threshold.
 
-		What we see in Figures \ref{fig:Summer}, \ref{fig:Autum} and \ref{fig:Winter} above, confirms our assumption of season shift and the necessity of a more complex CO$_2$ emission trends model.
+		What we see in Figures \ref{fig:Summer}, \ref{fig:Autum} and \ref{fig:Winter}, confirms our assumption of season shift and the necessity of a more complex CO$_2$ emission trends model.
 		
 		% sub-subsection trends_in_co2_data (end)	
 
